@@ -1,5 +1,5 @@
 <?php
-// src/Controller/BlogController.php
+// src/Controller/DefaultController.php
 namespace App\Controller;
 
 
@@ -8,15 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-class BlogController extends AbstractController
+class DefaultController extends AbstractController
 {
     /**
-     * @Route("/blog", name="blog_index")
+     * @Route("/", name="app_index")
      */
     public function index()
     {
-        return $this->render('blog/index.html.twig', [
-            'owner' => 'Thomas',
-        ]);
+        return $this->render('/default.html.twig');
     }
 }

@@ -16,7 +16,18 @@ class BlogController extends AbstractController
     public function index()
     {
         return $this->render('blog/index.html.twig', [
-            'owner' => 'Thomas',
+            'owner' => 'Jaffar',
+        ]);
+    }
+
+    /**
+     * @Route("blog/show/{slug}")
+     */
+
+    public function show($slug)
+    {
+        return $this->render('blog/show.html.twig', [
+            'title' => ucwords(str_replace('-', ' ', $slug)),
         ]);
     }
 }

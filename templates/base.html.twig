@@ -8,7 +8,9 @@
     {% endblock %}
 </head>
 <body>
-{% include 'blog/navbar.html.twig' %}
+<header>
+    {% include 'blog/navbar.html.twig' %}
+</header>
 {% block body %}{% endblock %}
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

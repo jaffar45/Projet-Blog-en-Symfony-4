@@ -42,12 +42,12 @@ class BlogController extends AbstractController
      *
      * @param string $slug The slugger
      *
-     * @Route("/blog/{slug<^[a-z0-9-]+$>}",
+     * @Route("/blog/show/{slug<^[a-z0-9-]+$>}",
      *     defaults={"slug" = null},
      *     name="blog_show")
-     *  @return Response A response instance
+     * @return Response A response instance
      */
-    public function show(string $slug) : Response
+    public function show(string $slug): Response
     {
         if (!$slug) {
             throw $this
@@ -56,8 +56,7 @@ class BlogController extends AbstractController
 
         $slug = preg_replace(
             '/-/',
-            ' ', ucwords(trim(strip_tags($slug)), "-")
-        );
+            ' ', ucwords(trim(strip_tags($slug)), "-"));
 
         $article = $this->getDoctrine()
             ->getRepository(Article::class)
@@ -65,8 +64,7 @@ class BlogController extends AbstractController
 
         if (!$article) {
             throw $this->createNotFoundException(
-                'No article with '.$slug.' title, found in article\'s table.'
-            );
+                'No article with ' . $slug . ' title, found in article\'s table.');
         }
 
         return $this->render(
@@ -85,7 +83,7 @@ class BlogController extends AbstractController
      * @Route("/blog/category/{categoryName}", name="show_category")
      * @return Response A response instance
      */
-    public function showByCategory(string $categoryName) : Response
+    public function showByCategory(string $categoryName): Response
     {
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
@@ -93,13 +91,18 @@ class BlogController extends AbstractController
 
         if (!$categoryName) {
             throw $this->createNotFoundException(
-                'No article found in category\'s table.'
-            );
+                'No article found in category\'s table.');
         }
+
+        $articles = $this->getDoctrine()
+           ->getRepository(Article::class)
+           ->findBy(['category' => $category]);
+
 
         return $this->render(
             'blog/category.html.twig',
-            ['categories' => $category]
-        );
+            ['category' => $category,
+                'articles' => $articles,
+            ]);
     }
 }

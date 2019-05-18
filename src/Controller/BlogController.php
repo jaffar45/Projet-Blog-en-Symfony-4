@@ -106,28 +106,48 @@ class BlogController extends AbstractController
 //            ]);
 //    }
 
+//    /**
+//     * Getting articles from a category
+//     *
+//     *
+//     * @Route("/blog/category/{categoryName}", name="show_category")
+//     * @return Response A response instance
+//     */
+//    public function showByCategory(string $categoryName): Response
+//    {
+//        $category = $this->getDoctrine()
+//            ->getRepository(Category::class)
+//            ->findOneByName($categoryName)
+//            ->getArticles();
+//
+//        if (!$categoryName) {
+//            throw $this->createNotFoundException(
+//                'No article found in category\'s table.');
+//        }
+//
+//        return $this->render(
+//            'blog/category.html.twig',
+//            ['category' => $category,
+//                ]);
+//    }
+
     /**
      * Getting articles from a category
      *
      *
-     * @Route("/blog/category/{categoryName}", name="show_category")
+     * @Route("/blog/category/{category}", name="show_category")
+     * @param Category $category
      * @return Response A response instance
      */
-    public function showByCategory(string $categoryName): Response
+    public function showByCategory(Category $category): Response
     {
-        $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneByName($categoryName)
-            ->getArticles();
+        $category->getArticles();
 
-        if (!$categoryName) {
-            throw $this->createNotFoundException(
-                'No article found in category\'s table.');
+        if (!$category) {
+            throw $this->createNotFoundException('No article found in category\'s table.');
         }
 
-        return $this->render(
-            'blog/category.html.twig',
-            ['category' => $category,
-                ]);
+        return $this->render('blog/category.html.twig', ['category' => $category,]);
     }
+
 }

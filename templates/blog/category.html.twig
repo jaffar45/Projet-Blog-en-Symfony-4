@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Articles in category's table : </h1>
     {% for article in category | reverse %}
-        {% if loop.index < 10 %}
+        {% if loop.index <= 5 %}
             <div>
                 <h2>{{ article.id }} - Category : {{ article.title }}</h2>
                 <p>{{ article.content }}</p>

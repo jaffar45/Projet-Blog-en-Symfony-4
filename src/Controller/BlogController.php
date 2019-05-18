@@ -2,12 +2,13 @@
 // src/Controller/BlogController.php
 namespace App\Controller;
 
-
+use App\Entity\Article;
 use App\Entity\Category;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Article;
+
 
 
 class BlogController extends AbstractController
@@ -47,6 +48,7 @@ class BlogController extends AbstractController
      *     name="blog_show")
      * @return Response A response instance
      */
+
     public function show(string $slug): Response
     {
         if (!$slug) {
@@ -75,6 +77,26 @@ class BlogController extends AbstractController
             ]
         );
     }
+
+    /**
+     * Getting articles from a category
+     *
+     *
+     * @Route("/blog/category/{category}", name="show_category")
+     * @ParamConverter("category", class="App\Entity\Category")
+     * @return Response A response instance
+     */
+
+    public function showByCategory(Category $category): Response
+    {
+
+        return $this->render('blog/category.html.twig', ['category' => $category,
+
+            'articles'=> $category->getArticles(),]);
+    }
+
+}
+
 
 //    /**
 //     * Getting articles from a category
@@ -131,23 +153,3 @@ class BlogController extends AbstractController
 //                ]);
 //    }
 
-    /**
-     * Getting articles from a category
-     *
-     *
-     * @Route("/blog/category/{category}", name="show_category")
-     * @param Category $category
-     * @return Response A response instance
-     */
-    public function showByCategory(Category $category): Response
-    {
-        $category->getArticles();
-
-        if (!$category) {
-            throw $this->createNotFoundException('No article found in category\'s table.');
-        }
-
-        return $this->render('blog/category.html.twig', ['category' => $category,]);
-    }
-
-}

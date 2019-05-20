@@ -82,9 +82,9 @@ class BlogController extends AbstractController
      * Getting articles from a category
      *
      *
-     * @Route("/blog/category/{category}", name="show_category")
+     * @Route("/blog/category/{name}", name="show_category")
      * @ParamConverter("category", class="App\Entity\Category")
-     * @return Response A response instance
+     * @return Response
      */
 
     public function showByCategory(Category $category): Response

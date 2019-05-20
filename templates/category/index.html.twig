@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+
 {% block title %}Hello CategoryController!{% endblock %}
 
 {% block body %}
 
-<div>
+<div class="container-fluid">
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}

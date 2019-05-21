@@ -14,7 +14,7 @@ class TagController extends AbstractController
      * @Route("/tag/{name}", name="show_tag")
      * @ParamConverter("tag", class="App\Entity\Tag")
      */
-    public function index(Tag $tag) :Response
+    public function index(Tag $tag): Response
     {
         return $this->render('tag/index.html.twig', [
             'tag' => $tag,

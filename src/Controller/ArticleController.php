@@ -45,7 +45,7 @@ class ArticleController extends AbstractController
             $message = (new \Swift_Message('Un nouvel article vient d\'être publié !'))
                 ->setFrom($this->getParameter('mailer_from'))
                 ->setTo($this->getParameter('mailer_from'))
-                ->setBody($this->renderView(':article/email/notification.html.twig');
+                ->setBody($this->renderView(':article/email/notification.html.twig'));
             $mailer->send($message);
 
             return $this->redirectToRoute('article_index');

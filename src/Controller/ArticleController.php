@@ -36,6 +36,7 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $article = $form->getData();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $slug = $slugify->generate($article->getTitle());
@@ -45,7 +46,7 @@ class ArticleController extends AbstractController
             $message = (new \Swift_Message('Un nouvel article vient d\'être publié !'))
                 ->setFrom($this->getParameter('mailer_from'))
                 ->setTo($this->getParameter('mailer_from'))
-                ->setBody($this->renderView('article/email/notification.html.twig'));
+                ->setBody($this->renderView('article/email/notification.html.twig'), ['article'=> $article, 'slug'=> $slug]);
             $mailer->send($message);
 
             return $this->redirectToRoute('article_index');
